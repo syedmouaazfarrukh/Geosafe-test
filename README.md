@@ -46,49 +46,56 @@ A Next.js application that provides secure file access based on user location. U
 
 ## Installation
 
+> **📖 For detailed setup instructions and troubleshooting, see [SETUP.md](./SETUP.md)**
+
+### Quick Start
+
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
-   cd geosafe
+   git clone https://github.com/Abdullah-222/Geosafe.git
+   cd Geosafe
    ```
 
-2. **Install dependencies**
+2. **Run setup script**
+   
+   **Windows (PowerShell):**
+   ```powershell
+   .\scripts\setup.ps1
+   ```
+   
+   **Linux/Mac:**
    ```bash
+   bash scripts/dev-setup.sh
+   ```
+
+3. **Manual Setup (if scripts don't work)**
+   
+   ```bash
+   # Install dependencies
    pnpm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
+   
+   # Create .env.local from env.example
    cp env.example .env.local
-   ```
+   # Edit .env.local with your database credentials
    
-   Update the following variables in `.env.local`:
-   ```env
-   # Database
-   DATABASE_URL="postgresql://username:password@localhost:5432/geosafe?schema=public"
+   # Generate Prisma client
+   npx prisma generate
    
-   # NextAuth
-   NEXTAUTH_SECRET="your-secret-key-here"
-   NEXTAUTH_URL="http://localhost:3000"
-   
-   # Encryption
-   ENCRYPTION_KEY="your-32-character-encryption-key-here"
-   
-   # Admin User
-   ADMIN_EMAIL="admin@geosafe.com"
-   ADMIN_PASSWORD="admin123"
-   ```
-
-4. **Set up the database**
-   ```bash
+   # Set up database
    npx prisma db push
+   
+   # Create admin user
    npx tsx scripts/create-admin.ts
    ```
 
-5. **Start the development server**
+4. **Start the development server**
    ```bash
    pnpm dev
    ```
+
+5. **Access the application**
+   - Open `http://localhost:3000`
+   - Sign in with admin credentials (from `.env.local`)
 
 ## Environment Variables
 
