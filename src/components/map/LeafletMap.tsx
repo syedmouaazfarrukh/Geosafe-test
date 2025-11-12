@@ -29,7 +29,8 @@ export default function LeafletMap({
   onLocationSelect,
   isAdmin = false,
   selectedZone,
-  showCurrentLocation: _showCurrentLocation = false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  showCurrentLocation = false,
   onLocationDetected
 }: LeafletMapProps) {
   const [isClient, setIsClient] = useState(false);

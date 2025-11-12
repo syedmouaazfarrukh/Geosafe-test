@@ -76,8 +76,8 @@ export async function POST(
     // Decrypt file
     const decryptedBuffer = decryptFile(file.encryptedData);
 
-    // Return file data
-    return new NextResponse(decryptedBuffer, {
+    // Return file data - convert Buffer to Uint8Array for NextResponse
+    return new NextResponse(new Uint8Array(decryptedBuffer), {
       headers: {
         'Content-Type': file.mimeType,
         'Content-Disposition': `attachment; filename="${file.originalName}"`,
