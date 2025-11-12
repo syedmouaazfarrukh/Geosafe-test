@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import MapWrapper from "@/components/map/MapWrapper";
 import { toast } from "sonner";
 
@@ -74,7 +73,7 @@ export default function CreateSafeZoneDialog({ onZoneCreated }: CreateSafeZoneDi
         const error = await response.json();
         toast.error(error.message || "Failed to create safe zone");
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred");
     } finally {
       setIsLoading(false);

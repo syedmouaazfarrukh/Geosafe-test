@@ -23,19 +23,14 @@ interface SimpleMapProps {
 }
 
 export default function SimpleMap({
-  safeZones,
   userLocation,
-  onLocationSelect,
-  isAdmin = false,
-  selectedZone,
-  showCurrentLocation = false,
   onLocationDetected
 }: SimpleMapProps) {
   const [isClient, setIsClient] = useState(false);
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [mapCenter, setMapCenter] = useState<[number, number]>([51.505, -0.09]);
-  const [mapInstance, setMapInstance] = useState<any>(null);
+  const [mapInstance] = useState<unknown>(null);
 
   useEffect(() => {
     setIsClient(true);

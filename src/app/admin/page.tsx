@@ -8,8 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Users, MapPin, Upload, Shield, Trash2, Edit } from "lucide-react";
-import Link from "next/link";
+import { Users, MapPin, Upload, Shield, Trash2 } from "lucide-react";
 import CreateSafeZoneDialog from "@/components/admin/CreateSafeZoneDialog";
 import FileUploadDialog from "@/components/admin/FileUploadDialog";
 import EditUserDialog from "@/components/admin/EditUserDialog";

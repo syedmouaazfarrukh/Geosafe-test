@@ -29,15 +29,15 @@ export default function LeafletMap({
   onLocationSelect,
   isAdmin = false,
   selectedZone,
-  showCurrentLocation = false,
+  showCurrentLocation: boolean = false,
   onLocationDetected
 }: LeafletMapProps) {
   const [isClient, setIsClient] = useState(false);
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [mapCenter, setMapCenter] = useState<[number, number]>([51.505, -0.09]);
-  const mapRef = useRef<any>(null);
-  const mapInstanceRef = useRef<any>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<L.Map | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -60,6 +60,7 @@ export default function LeafletMap({
         const L = await import('leaflet');
         
         // Fix for default markers
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         delete (L.Icon.Default.prototype as any)._getIconUrl;
         L.Icon.Default.mergeOptions({
           iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -163,7 +164,7 @@ export default function LeafletMap({
         if (selectedZone && isAdmin) {
           console.log('Adding selected zone marker:', selectedZone);
           
-          const selectedMarker = L.marker([selectedZone.latitude, selectedZone.longitude], {
+          L.marker([selectedZone.latitude, selectedZone.longitude], {
             icon: L.divIcon({
               className: 'selected-zone-marker',
               html: `
@@ -188,7 +189,7 @@ export default function LeafletMap({
             })
           }).addTo(map);
 
-          const selectedCircle = L.circle([selectedZone.latitude, selectedZone.longitude], {
+          L.circle([selectedZone.latitude, selectedZone.longitude], {
             color: '#1E3A8A',
             fillColor: '#3b82f6',
             fillOpacity: 0.2,
@@ -234,10 +235,10 @@ export default function LeafletMap({
           console.log('Adding click handler for admin');
           
           // Store references to current markers for cleanup
-          let currentMarker: any = null;
-          let currentCircle: any = null;
+          let currentMarker: L.Marker | null = null;
+          let currentCircle: L.Circle | null = null;
           
-          map.on('click', (e: any) => {
+          map.on('click', (e: L.LeafletMouseEvent) => {
             const { lat, lng } = e.latlng;
             console.log('Map clicked:', lat, lng);
             console.log('Calling onLocationSelect with:', lat, lng);
@@ -326,7 +327,7 @@ export default function LeafletMap({
         mapInstanceRef.current = null;
       }
     };
-  }, [isClient, mapCenter, safeZones, userLocation, currentLocation, isAdmin, onLocationSelect]);
+  }, [isClient, mapCenter, safeZones, userLocation, currentLocation, isAdmin, onLocationSelect, selectedZone]);
 
   // Handle current location updates without reinitializing the map
   useEffect(() => {
@@ -337,9 +338,11 @@ export default function LeafletMap({
         const L = await import('leaflet');
         
         // Remove any existing current location markers
-        mapInstanceRef.current.eachLayer((layer: any) => {
-          if (layer.options && layer.options.className === 'current-location-marker') {
-            mapInstanceRef.current.removeLayer(layer);
+        mapInstanceRef.current.eachLayer((layer) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const layerOptions = (layer as any).options;
+          if (layerOptions && layerOptions.className === 'current-location-marker') {
+            mapInstanceRef.current?.removeLayer(layer);
           }
         });
 
@@ -484,7 +487,7 @@ export default function LeafletMap({
         <div className="absolute bottom-4 left-4 z-[1000] bg-white border border-gray-300 rounded-lg p-3 shadow-lg max-w-xs">
           <h4 className="font-semibold text-sm text-gray-800 mb-2">Safe Zones</h4>
           <div className="space-y-2">
-            {safeZones.map((zone, index) => (
+            {safeZones.map((zone) => (
               <div key={zone.id} className="flex items-center gap-2 text-xs">
                 <div 
                   className="w-4 h-4 rounded-full border-2 border-white shadow-sm"

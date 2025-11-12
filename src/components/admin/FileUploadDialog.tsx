@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Upload, File } from "lucide-react";
 import { toast } from "sonner";
 
@@ -116,7 +115,7 @@ export default function FileUploadDialog({ onFileUploaded }: FileUploadDialogPro
         const error = await response.json();
         toast.error(error.message || "Failed to upload file");
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred");
     } finally {
       setIsLoading(false);

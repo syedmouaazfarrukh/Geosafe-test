@@ -39,7 +39,7 @@ export default function SignIn() {
           router.push("/user");
         }
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred");
     } finally {
       setIsLoading(false);
@@ -94,7 +94,7 @@ export default function SignIn() {
           </form>
           <div className="mt-4 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link href="/auth/signup" className="text-[#1E3A8A] hover:underline">
                 Sign up
               </Link>

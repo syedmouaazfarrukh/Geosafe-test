@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, MapPin, Lock, Users } from "lucide-react";
+import { MapPin, Lock, Users } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/navigation/Navbar";
 
@@ -17,7 +17,7 @@ export default function Home() {
         </h2>
         <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
           Protect your sensitive files with location-based access control. 
-          Files are only accessible when you're in designated safe zones.
+          Files are only accessible when you&apos;re in designated safe zones.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/auth/signup">

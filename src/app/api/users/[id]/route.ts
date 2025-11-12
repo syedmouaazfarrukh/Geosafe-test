@@ -18,7 +18,12 @@ export async function PUT(
     const { name, email, password, role } = await request.json();
     const { id } = await params;
 
-    const updateData: any = {
+    const updateData: {
+      name?: string;
+      email?: string;
+      role?: string;
+      password?: string;
+    } = {
       name,
       email,
       role

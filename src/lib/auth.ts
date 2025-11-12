@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as any,
+  adapter: PrismaAdapter(prisma) as unknown as NextAuthOptions["adapter"],
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: credentials.email
           }
-        }) as any
+        })
 
         if (!user || !user.password) {
           return null

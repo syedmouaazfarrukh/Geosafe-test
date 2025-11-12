@@ -17,7 +17,6 @@ import Link from "next/link";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
-  const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleSignOut = () => {

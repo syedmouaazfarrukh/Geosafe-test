@@ -58,7 +58,7 @@ export default function SignUp() {
         const error = await response.json();
         toast.error(error.message || "Failed to create account");
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred");
     } finally {
       setIsLoading(false);
