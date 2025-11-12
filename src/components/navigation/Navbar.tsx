@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Shield, User, LogOut, Menu, X } from "lucide-react";
+import { Shield, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 

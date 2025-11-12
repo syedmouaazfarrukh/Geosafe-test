@@ -29,8 +29,6 @@ export default function SimpleMap({
   const [isClient, setIsClient] = useState(false);
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isLocating, setIsLocating] = useState(false);
-  const [mapCenter, setMapCenter] = useState<[number, number]>([51.505, -0.09]);
-  const [mapInstance] = useState<unknown>(null);
 
   useEffect(() => {
     setIsClient(true);
