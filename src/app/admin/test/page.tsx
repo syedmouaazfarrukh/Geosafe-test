@@ -23,6 +23,13 @@ export default function EncryptionTestPage() {
   const [isTesting, setIsTesting] = useState(false);
   const [testText, setTestText] = useState("This is a test file for encryption verification.");
   const [databaseStats, setDatabaseStats] = useState<{
+    stats: {
+      totalFiles: number;
+      encryptedFiles: number;
+      unencryptedFiles: number;
+      totalSize: number;
+      averageFileSize: number;
+    };
     files: Array<{
       id: string;
       name: string;
