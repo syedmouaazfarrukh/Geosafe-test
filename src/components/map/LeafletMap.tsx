@@ -58,6 +58,9 @@ export default function LeafletMap({
         // Small delay to ensure container is ready
         await new Promise(resolve => setTimeout(resolve, 100));
         
+        // Double-check mapRef is still available after async delay
+        if (!mapRef.current) return;
+        
         const L = await import('leaflet');
         
         // Fix for default markers
@@ -74,7 +77,7 @@ export default function LeafletMap({
           mapInstanceRef.current.remove();
         }
 
-        // Initialize map
+        // Initialize map - mapRef.current is guaranteed to be non-null here
         console.log('Initializing map with center:', mapCenter);
         const map = L.map(mapRef.current, {
           center: mapCenter,
@@ -336,14 +339,18 @@ export default function LeafletMap({
 
     const updateCurrentLocation = async () => {
       try {
+        // Store reference to avoid null checks after async
+        const mapInstance = mapInstanceRef.current;
+        if (!mapInstance) return;
+        
         const L = await import('leaflet');
         
         // Remove any existing current location markers
-        mapInstanceRef.current.eachLayer((layer) => {
+        mapInstance.eachLayer((layer) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const layerOptions = (layer as any).options;
           if (layerOptions && layerOptions.className === 'current-location-marker') {
-            mapInstanceRef.current?.removeLayer(layer);
+            mapInstance.removeLayer(layer);
           }
         });
 
