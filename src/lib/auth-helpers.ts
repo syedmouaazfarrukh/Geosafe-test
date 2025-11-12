@@ -16,3 +16,14 @@ export function isAdmin(session: Session | null): boolean {
   return getUserRole(session) === "ADMIN";
 }
 
+/**
+ * Get user ID from session safely
+ * Throws if session is null (should be called after isAdmin check)
+ */
+export function getUserId(session: Session | null): string {
+  if (!session?.user?.id) {
+    throw new Error("Session or user ID is missing");
+  }
+  return session.user.id;
+}
+

@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { decryptFile } from "@/lib/encryption";
 import { isWithinSafeZone } from "@/lib/geo";
+import { getUserId } from "@/lib/auth-helpers";
 
 export async function POST(
   request: NextRequest,
@@ -55,7 +56,7 @@ export async function POST(
     // Log access attempt
     await prisma.fileAccess.create({
       data: {
-        userId: session.user.id,
+        userId: getUserId(session),
         fileId: file.id,
         latitude,
         longitude,

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { isAdmin } from "@/lib/auth-helpers";
+import { isAdmin, getUserId } from "@/lib/auth-helpers";
 
 export async function GET() {
   try {
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
         longitude: parseFloat(longitude),
         radius: parseFloat(radius),
         description,
-        createdBy: session.user.id
+        createdBy: getUserId(session)
       }
     });
 

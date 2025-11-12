@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import { isAdmin } from "@/lib/auth-helpers";
+import { isAdmin, getUserId } from "@/lib/auth-helpers";
 
 export async function PUT(
   request: NextRequest,
@@ -71,7 +71,7 @@ export async function DELETE(
     const { id } = await params;
 
     // Prevent admin from deleting themselves
-    if (id === session.user.id) {
+    if (id === getUserId(session)) {
       return NextResponse.json(
         { message: "Cannot delete your own account" },
         { status: 400 }
