@@ -377,7 +377,7 @@ export default function LeafletMap({
             iconSize: [30, 30],
             iconAnchor: [15, 15]
           })
-        }).addTo(mapInstanceRef.current);
+        }).addTo(mapInstance);
 
         currentMarker.bindPopup(`
           <div class="p-2">
