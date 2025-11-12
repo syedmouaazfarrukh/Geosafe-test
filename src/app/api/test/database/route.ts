@@ -21,7 +21,7 @@ export async function GET() {
       }
     });
 
-    const fileAnalysis = files.map(file => ({
+    const fileAnalysis = files.map((file) => ({
       id: file.id,
       name: file.originalName,
       size: file.size,
@@ -42,8 +42,8 @@ export async function GET() {
     // Get database stats
     const stats = {
       totalFiles: files.length,
-      encryptedFiles: files.filter(f => f.encryptedData).length,
-      unencryptedFiles: files.filter(f => !f.encryptedData).length,
+      encryptedFiles: files.filter((f) => f.encryptedData).length,
+      unencryptedFiles: files.filter((f) => !f.encryptedData).length,
       totalSize: files.reduce((sum, f) => sum + f.size, 0),
       averageFileSize: files.length > 0 ? files.reduce((sum, f) => sum + f.size, 0) / files.length : 0
     };

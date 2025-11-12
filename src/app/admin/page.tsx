@@ -116,7 +116,7 @@ export default function AdminDashboard() {
       });
       
       if (response.ok) {
-        setSafeZones(safeZones.filter(zone => zone.id !== zoneId));
+        setSafeZones(safeZones.filter((zone) => zone.id !== zoneId));
       }
     } catch (error) {
       console.error("Error deleting zone:", error);
@@ -132,7 +132,7 @@ export default function AdminDashboard() {
       });
       
       if (response.ok) {
-        setUsers(users.filter(user => user.id !== userId));
+        setUsers(users.filter((user) => user.id !== userId));
       } else {
         const error = await response.json();
         alert(error.message || "Failed to delete user");

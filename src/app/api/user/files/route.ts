@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Filter files where user is within safe zone
-    const accessibleFiles = allFiles.filter(file => 
+    const accessibleFiles = allFiles.filter((file) => 
       isWithinSafeZone(
         latitude,
         longitude,
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Return file info without encrypted data
-    const fileInfo = accessibleFiles.map(file => ({
+    const fileInfo = accessibleFiles.map((file) => ({
       id: file.id,
       name: file.name,
       originalName: file.originalName,
