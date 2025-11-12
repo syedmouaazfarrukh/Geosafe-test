@@ -36,14 +36,13 @@ export default function SimpleMap({
 
   useEffect(() => {
     if (userLocation) {
-      setMapCenter([userLocation.lat, userLocation.lng]);
+      setCurrentLocation({ lat: userLocation.lat, lng: userLocation.lng });
     }
   }, [userLocation]);
 
   const handleLocationDetected = (lat: number, lng: number) => {
     setCurrentLocation({ lat, lng });
     setIsLocating(false);
-    setMapCenter([lat, lng]);
     onLocationDetected?.(lat, lng);
   };
 
