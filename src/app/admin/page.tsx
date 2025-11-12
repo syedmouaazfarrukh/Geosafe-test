@@ -71,7 +71,7 @@ export default function AdminDashboard() {
       return;
     }
     
-    if (session.user?.role !== "ADMIN") {
+    if (session.user && 'role' in session.user && session.user.role !== "ADMIN") {
       router.push("/user");
       return;
     }

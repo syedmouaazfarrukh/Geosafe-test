@@ -29,7 +29,7 @@ export default function LeafletMap({
   onLocationSelect,
   isAdmin = false,
   selectedZone,
-  showCurrentLocation = false,
+  showCurrentLocation: _showCurrentLocation = false,
   onLocationDetected
 }: LeafletMapProps) {
   const [isClient, setIsClient] = useState(false);
