@@ -39,6 +39,8 @@ export default function LeafletMap({
   const [mapCenter, setMapCenter] = useState<[number, number]>([51.505, -0.09]);
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
+  const selectedMarkerRef = useRef<L.Marker | null>(null);
+  const selectedCircleRef = useRef<L.Circle | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -248,13 +250,15 @@ export default function LeafletMap({
             console.log('Calling onLocationSelect with:', lat, lng);
             
             // Remove previous markers if they exist
-            if (currentMarker) {
+            if (selectedMarkerRef.current) {
               console.log('Removing previous marker');
-              map.removeLayer(currentMarker);
+              map.removeLayer(selectedMarkerRef.current);
+              selectedMarkerRef.current = null;
             }
-            if (currentCircle) {
+            if (selectedCircleRef.current) {
               console.log('Removing previous circle');
-              map.removeLayer(currentCircle);
+              map.removeLayer(selectedCircleRef.current);
+              selectedCircleRef.current = null;
             }
             
             // Add a prominent marker to show the selected location
@@ -297,9 +301,9 @@ export default function LeafletMap({
             
             console.log('Added circle to map');
             
-            // Store references in the map instance for persistence
-            map._selectedMarker = currentMarker;
-            map._selectedCircle = currentCircle;
+            // Store references in refs for persistence
+            selectedMarkerRef.current = currentMarker;
+            selectedCircleRef.current = currentCircle;
             
             // Call the location select callback
             console.log('Calling onLocationSelect callback');
