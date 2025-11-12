@@ -42,6 +42,7 @@ ENCRYPTION_KEY="your-32-character-encryption-key"
 ADMIN_EMAIL="admin@geosafe.com"
 ADMIN_PASSWORD="admin123"
 NODE_ENV="production"
+PORT=10000
 ```
 
 **Important**: 

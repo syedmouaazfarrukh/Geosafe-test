@@ -3,6 +3,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/auth-helpers";
+import { Prisma } from "@prisma/client";
+
+type FileWithSafeZone = Prisma.FileGetPayload<{
+  include: { safeZone: true }
+}>;
 
 export async function GET() {
   try {
@@ -22,7 +27,7 @@ export async function GET() {
       }
     });
 
-    const fileAnalysis = files.map((file) => ({
+    const fileAnalysis = files.map((file: FileWithSafeZone) => ({
       id: file.id,
       name: file.originalName,
       size: file.size,
@@ -43,10 +48,10 @@ export async function GET() {
     // Get database stats
     const stats = {
       totalFiles: files.length,
-      encryptedFiles: files.filter((f) => f.encryptedData).length,
-      unencryptedFiles: files.filter((f) => !f.encryptedData).length,
-      totalSize: files.reduce((sum, f) => sum + f.size, 0),
-      averageFileSize: files.length > 0 ? files.reduce((sum, f) => sum + f.size, 0) / files.length : 0
+      encryptedFiles: files.filter((f: FileWithSafeZone) => f.encryptedData).length,
+      unencryptedFiles: files.filter((f: FileWithSafeZone) => !f.encryptedData).length,
+      totalSize: files.reduce((sum: number, f: FileWithSafeZone) => sum + f.size, 0),
+      averageFileSize: files.length > 0 ? files.reduce((sum: number, f: FileWithSafeZone) => sum + f.size, 0) / files.length : 0
     };
 
     return NextResponse.json({
