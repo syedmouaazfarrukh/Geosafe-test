@@ -71,10 +71,10 @@ export async function POST(request: NextRequest) {
       mimeType: file.mimeType,
       size: file.size,
       createdAt: file.createdAt,
-      safeZone: {
+      safeZone: file.safeZone ? {
         name: file.safeZone.name,
         description: file.safeZone.description
-      }
+      } : null
     }));
 
     return NextResponse.json(fileInfo);
