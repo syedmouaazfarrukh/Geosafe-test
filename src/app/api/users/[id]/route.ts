@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Role } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { isAdmin, getUserId } from "@/lib/auth-helpers";
 
@@ -22,13 +23,22 @@ export async function PUT(
     const updateData: {
       name?: string;
       email?: string;
-      role?: string;
+      role?: Role;
       password?: string;
-    } = {
-      name,
-      email,
-      role
-    };
+    } = {};
+    
+    if (name !== undefined) updateData.name = name;
+    if (email !== undefined) updateData.email = email;
+    if (role !== undefined) {
+      if (role === Role.ADMIN || role === Role.USER) {
+        updateData.role = role;
+      } else {
+        return NextResponse.json(
+          { message: "Invalid role. Must be ADMIN or USER" },
+          { status: 400 }
+        );
+      }
+    }
 
     // Only update password if provided
     if (password) {
