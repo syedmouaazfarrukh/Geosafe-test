@@ -4,6 +4,30 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isWithinSafeZone } from "@/lib/geo";
 
+// Type for file with safe zone relation
+type FileWithSafeZone = {
+  id: string;
+  name: string;
+  originalName: string;
+  encryptedData: string;
+  mimeType: string;
+  size: number;
+  createdAt: Date;
+  updatedAt: Date;
+  safeZoneId: string;
+  safeZone: {
+    id: string;
+    name: string;
+    latitude: number;
+    longitude: number;
+    radius: number;
+    description: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: string;
+  } | null;
+};
+
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -29,8 +53,8 @@ export async function POST(request: NextRequest) {
     });
 
     // Filter files where user is within safe zone
-    const accessibleFiles = allFiles.filter((file) => 
-      isWithinSafeZone(
+    const accessibleFiles = allFiles.filter((file: FileWithSafeZone) => 
+      file.safeZone && isWithinSafeZone(
         latitude,
         longitude,
         file.safeZone.latitude,
@@ -40,7 +64,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Return file info without encrypted data
-    const fileInfo = accessibleFiles.map((file) => ({
+    const fileInfo = accessibleFiles.map((file: FileWithSafeZone) => ({
       id: file.id,
       name: file.name,
       originalName: file.originalName,
