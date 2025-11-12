@@ -122,7 +122,11 @@ export default function EncryptionTestPage() {
       }
 
     } catch (error) {
-      addTestResult(false, `Test failed with error: ${error instanceof Error ? error.message : 'Unknown error'}`, error);
+      const errorDetails: Record<string, unknown> = {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.toString() : String(error)
+      };
+      addTestResult(false, `Test failed with error: ${error instanceof Error ? error.message : 'Unknown error'}`, errorDetails);
     } finally {
       setIsTesting(false);
     }
@@ -161,7 +165,11 @@ export default function EncryptionTestPage() {
       }
 
     } catch (error) {
-      addTestResult(false, `Direct test failed with error: ${error instanceof Error ? error.message : 'Unknown error'}`, error);
+      const errorDetails: Record<string, unknown> = {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        error: error instanceof Error ? error.toString() : String(error)
+      };
+      addTestResult(false, `Direct test failed with error: ${error instanceof Error ? error.message : 'Unknown error'}`, errorDetails);
     } finally {
       setIsTesting(false);
     }
