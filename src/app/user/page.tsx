@@ -298,7 +298,7 @@ export default function UserDashboard() {
                 <div className="h-80 sm:h-96">
                   <MapWrapper 
                     safeZones={[]} // We'll need to fetch safe zones for display
-                    userLocation={userLocation}
+                    userLocation={userLocation || undefined}
                     showCurrentLocation={false} // Disable auto-location detection
                     onLocationDetected={(lat, lng) => {
                       setUserLocation({ lat, lng });
