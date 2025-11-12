@@ -3,11 +3,30 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/auth-helpers";
-import { Prisma } from "@prisma/client";
 
-type FileWithSafeZone = Prisma.FileGetPayload<{
-  include: { safeZone: true }
-}>;
+// Type for file with safe zone relation
+type FileWithSafeZone = {
+  id: string;
+  name: string;
+  originalName: string;
+  encryptedData: string;
+  mimeType: string;
+  size: number;
+  createdAt: Date;
+  updatedAt: Date;
+  safeZoneId: string;
+  safeZone: {
+    id: string;
+    name: string;
+    latitude: number;
+    longitude: number;
+    radius: number;
+    description: string | null;
+    createdAt: Date;
+    updatedAt: Date;
+    createdBy: string;
+  } | null;
+};
 
 export async function GET() {
   try {
