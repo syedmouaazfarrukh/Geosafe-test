@@ -71,7 +71,9 @@ export default function AdminDashboard() {
       return;
     }
     
-    if (session.user && 'role' in session.user && session.user.role !== "ADMIN") {
+    // Type assertion needed because NextAuth types don't include role by default
+    const userRole = (session.user as { role?: string })?.role;
+    if (userRole !== "ADMIN") {
       router.push("/user");
       return;
     }
@@ -153,7 +155,8 @@ export default function AdminDashboard() {
     );
   }
 
-  if (!session || session.user?.role !== "ADMIN") {
+  const userRole = session?.user ? (session.user as { role?: string })?.role : undefined;
+  if (!session || userRole !== "ADMIN") {
     return null;
   }
 
